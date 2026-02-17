@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Emma University - Cracovie</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+        }
+
+        /* Header avec image de bannière */
+        .hero-banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1486&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background 0.3s;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(26, 35, 126, 0.95);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            background: #ffd700;
+            color: #1a237e;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Content */
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .location {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: #ffd700;
+            color: #1a237e;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease 0.6s both;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Section Présentation */
+        .presentation {
+            background: white;
+            border-radius: 20px;
+            padding: 4rem;
+            margin-top: -100px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #1a237e;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .divider {
+            width: 100px;
+            height: 4px;
+            background: #ffd700;
+            margin: 0 auto;
+        }
+
+        .university-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .info-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a237e;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-image {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .info-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .info-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Section Programmes */
+        .programs {
+            padding: 4rem 0;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .program-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .program-card h3 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .program-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Section Campus */
+        .campus {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            padding: 4rem;
+            border-radius: 20px;
+        }
+
+        .campus h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .campus .divider {
+            background: #ffd700;
+            margin-bottom: 2rem;
+        }
+
+        .campus-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Section Admission */
+        .admission {
+            background: white;
+            border-radius: 20px;
+            padding: 4rem;
+            margin-top: 4rem;
+        }
+
+        .admission-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .info-block {
+            padding: 2rem;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .info-block h3 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-block ul {
+            list-style: none;
+        }
+
+        .info-block li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Section Contact */
+        .contact {
+            background: white;
+            border-radius: 20px;
+            padding: 4rem;
+            margin-top: 4rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            text-align: center;
+            padding: 2rem;
+            background: #f5f5f5;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: #1a237e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .contact-card h3 {
+            color: #1a237e;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: #666;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a237e;
+            color: white;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .social-link:hover {
+            background: #ffd700;
+            color: #1a237e;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content .location {
+                font-size: 1.3rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .presentation {
+                padding: 2rem;
+                margin-top: -50px;
+            }
+
+            .university-info {
+                grid-template-columns: 1fr;
+            }
+
+            .admission-info {
+                grid-template-columns: 1fr;
+            }
+
+            .campus {
+                padding: 2rem;
+            }
+
+            .contact {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <h1>EMMA UNIVERSITY</h1>
+            <span>Since 1995</span>
+        </div>
+        <div class="nav-links">
+            <a href="#accueil">Accueil</a>
+            <a href="#presentation">Présentation</a>
+            <a href="#programmes">Programmes</a>
+            <a href="#campus">Campus</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Banner avec image -->
+    <section id="accueil" class="hero-banner">
+        <div class="hero-content">
+            <h1>EMMA UNIVERSITY</h1>
+            <div class="location">
+                <span>📍</span>
+                <span>Cracovie, Pologne</span>
+            </div>
+            <p>L'excellence académique au cœur de l'Europe • Fondée en 1995</p>
+            <button class="cta-button" onclick="scrollToSection('presentation')">
+                Découvrir l'université
+            </button>
+        </div>
+    </section>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <!-- Section Présentation -->
+        <section id="presentation" class="presentation">
+            <div class="section-title">
+                <h2>Bienvenue à Emma University</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="university-info">
+                <div class="info-text">
+                    <p>Située au cœur de Cracovie, l'une des plus belles villes historiques de Pologne, Emma University est une institution privée d'excellence reconnue pour la qualité de son enseignement et sa recherche innovante.</p>
+                    <p>Notre campus, alliant architecture traditionnelle et installations modernes, offre un cadre d'étude unique à plus de 5000 étudiants venus du monde entier. Nous formons les leaders de demain dans un environnement international et multiculturel.</p>
+                    
+                    <div class="info-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">25+</div>
+                            <div class="stat-label">Programmes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Étudiants</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">70+</div>
+                            <div class="stat-label">Nationalités</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-image">
+                    <img src="https://images.unsplash.com/photo-1541829070764-84f7aacb0a2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Campus de l'université">
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Programmes -->
+        <section id="programmes" class="programs">
+            <div class="section-title">
+                <h2>Nos Programmes Académiques</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon">📚</div>
+                    <h3>Licences</h3>
+                    <p>Droit, Économie, Sciences Politiques, Lettres Modernes, Histoire de l'Art</p>
+                    <p><small>3 ans • Formation initiale</small></p>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-icon">🎓</div>
+                    <h3>Masters</h3>
+                    <p>MBA, Finance Internationale, Relations Internationales, Data Science</p>
+                    <p><small>2 ans • Recherche ou Professionnel</small></p>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-icon">🔬</div>
+                    <h3>Doctorats</h3>
+                    <p>Sciences Humaines, Économie, Droit International, Philosophie</p>
+                    <p><small>3-4 ans • En partenariat avec le CNRS</small></p>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-icon">🌍</div>
+                    <h3>Programmes Internationaux</h3>
+                    <p>Double diplômes avec 50 universités partenaires dans 30 pays</p>
+                    <p><small>Erasmus+, Bourses d'excellence</small></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Campus -->
+        <section id="campus" class="campus">
+            <h2>Vie sur le Campus</h2>
+            <div class="divider"></div>
+            
+            <div class="campus-features">
+                <div class="feature">
+                    <i>📚</i>
+                    <h3>Bibliothèque</h3>
+                    <p>Plus de 100 000 ouvrages, salles de travail modernes, archives historiques</p>
+                </div>
+
+                <div class="feature">
+                    <i>🏛️</i>
+                    <h3>Résidences</h3>
+                    <p>Logements confortables pour étudiants, restaurant universitaire, cafétéria</p>
+                </div>
+
+                <div class="feature">
+                    <i>⚽</i>
+                    <h3>Installations sportives</h3>
+                    <p>Gymnase, terrain de football, salle de fitness, clubs sportifs variés</p>
+                </div>
+
+                <div class="feature">
+                    <i>🎭</i>
+                    <h3>Vie culturelle</h3>
+                    <p>Théâtre, chorale, orchestre, ateliers artistiques, festivals étudiants</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Admission -->
+        <section id="admission" class="admission">
+            <div class="section-title">
+                <h2>Admissions</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="admission-info">
+                <div class="info-block">
+                    <h3>
+                        <span>📅</span>
+                        Calendrier 2024-2025
+                    </h3>
+                    <ul>
+                        <li>📝 Dépôt des candidatures : Janvier - Avril 2024</li>
+                        <li>📋 Examens d'entrée : Mai 2024</li>
+                        <li>📬 Résultats : Juin 2024</li>
+                        <li>🎉 Rentrée : Octobre 2024</li>
+                    </ul>
+                </div>
+
+                <div class="info-block">
+                    <h3>
+                        <span>📋</span>
+                        Conditions d'admission
+                    </h3>
+                    <ul>
+                        <li>✅ Baccalauréat ou équivalent</li>
+                        <li>✅ Test de langue (B2 minimum)</li>
+                        <li>✅ Entretien de motivation</li>
+                        <li>✅ Dossier scolaire excellent</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Contact -->
+        <section id="contact" class="contact">
+            <div class="section-title">
+                <h2>Contactez-nous</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Adresse</h3>
+                    <p>ul. Bracka 15<br>31-005 Cracovie<br>Pologne</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Téléphone</h3>
+                    <p>+48 12 345 67 89<br>+48 12 345 67 90</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <h3>Email</h3>
+                    <p>admissions@emmauniv.edu.pl<br>contact@emmauniv.edu.pl</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">🕒</div>
+                    <h3>Horaires</h3>
+                    <p>Lun-Ven: 9h-17h<br>Sam: 9h-12h</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>EMMA UNIVERSITY</h3>
+                <p>L'excellence académique au cœur de Cracovie depuis 1995. Une université privée d'exception dédiée à la formation des leaders de demain.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📘</a>
+                    <a href="#" class="social-link">📷</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">🔗</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <p>▶ Bibliothèque en ligne</p>
+                <p>▶ Espace étudiant</p>
+                <p>▶ Erasmus+</p>
+                <p>▶ Recherche</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Inscrivez-vous pour recevoir nos actualités</p>
+                <div style="display: flex; gap: 10px; margin-top: 1rem;">
+                    <input type="email" placeholder="Votre email" style="padding: 10px; border: none; border-radius: 5px; flex: 1;">
+                    <button style="padding: 10px 20px; background: #ffd700; border: none; border-radius: 5px; color: #1a237e; font-weight: bold; cursor: pointer;">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2024 Emma University - Cracovie, Pologne. Tous droits réservés.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Fondée en 1995 • Membre de l'Association des Universités Européennes</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script pour la navigation fluide
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Script pour la navbar qui change au scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Gestion des clics sur les liens de navigation
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            });
+        });
+
+        // Animation d'apparition au défilement
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observer les sections pour l'animation
+        document.querySelectorAll('.presentation, .programs, .campus, .admission, .contact').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
